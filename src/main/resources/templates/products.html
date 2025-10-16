@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Products</title>
+    <link rel="stylesheet" th:href="@{/css/products.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/header :: siteHeader"></div>
+<div class="container py-5">
+    <h2 class="mb-4 text-center font-weight-bold">
+
+        <span>Tất cả sản phẩm</span>
+        
+    </h2>
+
+    <div class="product-grid row justify-content-center">
+        <div class="product-item col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch" th:each="product : ${Products}">
+            <div class="card w-100 shadow-sm border-0">
+                <img th:src="@{'/images/' + ${product.hinh}}" th:alt="@{product.tenhh}" class="card-img-top product-img" />
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div class="product-name card-title mb-2 text-center" th:text="${product.tenhh}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: siteFooter"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
