@@ -15,4 +15,22 @@ public interface HangHoaRepository extends JpaRepository<HangHoa, Integer> {
     @Query("SELECT h FROM HangHoa h WHERE h.giamgia > 0 ORDER BY h.giamgia DESC")
     List<HangHoa> findSale(Pageable pageable);
 
+    // Query để lấy giá từ bảng cthanghoa
+    @Query(value = "SELECT TOP (?1) h.mahh, h.tenhh, h.hinh, MIN(ct.dongia) as dongia " +
+                   "FROM hanghoa h " +
+                   "INNER JOIN cthanghoa ct ON h.mahh = ct.idhanghoa " +
+                   "GROUP BY h.mahh, h.tenhh, h.hinh " +
+                   "ORDER BY h.mahh DESC", 
+           nativeQuery = true)
+    List<Object[]> findLatestWithPrice(int limit);
+
+    @Query(value = "SELECT TOP (?1) h.mahh, h.tenhh, h.hinh, MIN(ct.dongia) as dongia " +
+                   "FROM hanghoa h " +
+                   "INNER JOIN cthanghoa ct ON h.mahh = ct.idhanghoa " +
+                   "WHERE h.giamgia > 0 " +
+                   "GROUP BY h.mahh, h.tenhh, h.hinh, h.giamgia " +
+                   "ORDER BY h.giamgia DESC", 
+           nativeQuery = true)
+    List<Object[]> findSaleWithPrice(int limit);
+
 }
